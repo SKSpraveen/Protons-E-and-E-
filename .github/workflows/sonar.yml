@@ -24,15 +24,23 @@ jobs:
           cd frontend
           npm install
           npm run build
+          # The next step would be to generate a coverage report for the frontend, e.g., using `npm test -- --coverage`
 
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: 17
 
+      # The Java project must also be built here for SonarCloud to analyze the compiled code
+      - name: Build backend
+        run: |
+          cd BACKEND
+          # Replace 'mvn package' with your build command (e.g., 'gradle build')
+          mvn package
+
       - name: Run SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
-          organization: my-org
-          projectKey: my-org_my-project
+          organization: skspraveen
+          projectKey: SKSpraveen_Protons-E-and-E-
           token: ${{ secrets.SONAR_TOKEN }}
