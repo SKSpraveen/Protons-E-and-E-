@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
@@ -9,6 +10,7 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const { user } = useAuthContext();
   const { logout } = useLogout();
+  const { currentUser } = useSelector((state) => state.user);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -22,6 +24,12 @@ const UserProfile = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [validationError, setValidationError] = useState("");
+
+   useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, [currentUser, navigate]);
 
   useEffect(() => {
     if (user) {
@@ -137,7 +145,7 @@ const UserProfile = () => {
           <br />
           <br />
           <li style={{ marginBottom: "10px", fontSize: "25px" }}>
-            <button type="button" onClick={()=> navigate('/')} style={{ border: "none", backgroundColor: "#242424", color: "white", textDecoration: "none", marginLeft: "20%" }}>
+            <button type="button" onClick={()=> navigate('/feed')} style={{ border: "none", backgroundColor: "#242424", color: "white", textDecoration: "none", marginLeft: "20%" }}>
               Feedback
             </button>
           </li>
@@ -194,7 +202,7 @@ const UserProfile = () => {
               type="text"
               id="name"
               name="name"
-              value={userData.name}
+              value={userData.name || currentUser?.name}
               readOnly
               style={{
                 width: "100%",
@@ -213,7 +221,7 @@ const UserProfile = () => {
               type="email"
               id="email"
               name="email"
-              value={userData.email}
+              value={userData.email || currentUser?.email}
               readOnly
               style={{
                 width: "100%",
@@ -231,7 +239,7 @@ const UserProfile = () => {
               type="text"
               id="address"
               name="address"
-              value={userData.address}
+              value={userData.address || currentUser?.address}
               readOnly
               style={{
                 width: "100%",
@@ -249,7 +257,7 @@ const UserProfile = () => {
               type="tel"
               id="phoneNumber"
               name="phoneNumber"
-              value={userData.phoneNumber}
+              value={userData.phoneNumber || currentUser?.phoneNumber}
               readOnly
               style={{
                 width: "100%",
