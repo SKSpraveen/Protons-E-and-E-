@@ -1,0 +1,52 @@
+.container_exform {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: hwb(0 89% 11% / 0.803);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(27, 27, 27, 0.744);
+    align-items: center;
+   
+   
+  }
+  
+  .rh1 {
+    margin-left: 10%;
+    text-align: left;
+    color: rgb(236, 67, 0);;
+  }
+  
+  .rformLabel {
+    font-weight: bold;
+    color: #000000;
+    margin-left: 10%;
+  }
+  
+  .form-select,
+  .rform-control {
+    width: 100%;
+    margin-bottom: 15px;
+    margin-left: 10%;
+  }
+  
+  .rbtn-primary {
+    width: 100px;
+    margin-left: 10%;
+    color: #ffffff;
+    font-weight: bold;
+    background-color:  rgb(236, 67, 0);
+    border-radius: 10px;
+    
+  }
+  .rbtn-primary:hover {
+   
+    background-color:  rgba(255, 255, 255, 0.96);
+    color: rgb(236, 67, 0) ;
+}
+
+  .bottom{
+    background-color: hwb(0 94% 6%);
+  }
+  
+
+

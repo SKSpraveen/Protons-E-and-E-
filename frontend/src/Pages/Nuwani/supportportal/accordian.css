@@ -1,0 +1,119 @@
+.accordion {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+.itemnuw{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    column-gap: 24px;
+    row-gap: 32px;
+    border-top: 4px solid #343A40;
+    box-shadow: #343A40;
+    border-radius: 15px 0 0 0;
+    align-items: center;
+    padding: 24px 24px 0 24px;
+    background-color: #202020;
+}
+
+.number,
+.textnuw{
+    color: #d05922;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.icon{
+    width: 24px;
+    height: 24px;
+    color: #343A40;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    
+}
+
+.hidden-box{
+    
+    grid-column: 1;
+    background-color: #D0D4D8;
+}
+
+.hidden-box p{
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: black;
+    transition: max-height 0.3s ease;
+}
+
+.active-box{
+    max-height: 245px;
+    margin-bottom: 24px;
+    transition: max-height 0.3s ease;
+}
+
+.rotate{
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.search-container{
+    padding-left: 40%;
+    padding-top: 0%;
+    padding-bottom: 5%;
+}
+
+.search {
+    background-color: #D0D4D8; /* Background color */
+    padding: 15px; /* Adjust padding to increase size */
+    font-size: 18px; /* Adjust font size */
+    border-color: #343A40; /* Remove border */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    width: 40%; /* Adjust width to fill the container */
+    box-sizing: border-box; /* Include padding and border in the total width */
+}
+.search::placeholder {
+    color: #343A40; /* Placeholder text color */
+    font-size: 20px; /* Adjust placeholder text size */
+}
+
+.cardnuw-icons {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    margin-bottom: 1%;
+  }
+  
+  .pencil-icon,
+  .bin-icon {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+    margin-left: 8px;
+    
+  }
+
+  .icon-link {
+    text-decoration: none;
+    background-color: #767676;
+    border-radius: 15%;
+    border-color: #767676;
+    
+  }
+  
+  .icon-link img {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+    margin-left: 8px;
+    
+  }
+
+  .faq-answer {
+    max-height: 200px; 
+    overflow-y: auto; 
+}

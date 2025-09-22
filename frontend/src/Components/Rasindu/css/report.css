@@ -1,0 +1,103 @@
+
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    
+    padding: 20px;
+    width: 75%;
+}
+
+.rh3Report {
+    text-align: center;
+    margin-bottom: 20px;
+    
+}
+
+
+.rTabaleReport {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.rthReport, .rtdReport {
+    padding: 10px;
+    
+    text-align: left;
+}
+
+
+
+.rtotal {
+    text-align: right;
+    font-weight: bold;
+}
+
+.rfooter {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #888;
+}
+.rReportLabel{
+    margin-left: 20px;
+    background-color: #000000;
+    color: #fff;
+    width: 5%;
+   
+}
+option{
+    background-color: #00000061;
+    color: #fff;
+}
+.rReportp{
+  text-align: left;
+  color: black;
+  font-size: 20px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  
+}
+
+
+
+/* Style for select box */
+#month {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none; /* Remove default focus outline */
+  }
+  
+  /* Style for select box when focused */
+  #month:focus {
+    border-color: #007bff; /* Change border color when focused */
+  }
+  
+  /* Style for select box options */
+  #month option {
+    padding: 8px;
+  }
+  
+  /* Style for select box arrow */
+  #month::-ms-expand {
+    display: none; /* Remove arrow in IE */
+  }
+  
+  #month::before {
+    content: '\25BC'; /* Unicode character for down arrow */
+    position: absolute;
+    right: 6px;
+    top: calc(50% - 4px); /* Center vertically */
+  }
+  
+  /* Style for select box arrow in Firefox */
+  @-moz-document url-prefix() {
+    #month::after {
+      content: '\25BC'; /* Unicode character for down arrow */
+      position: absolute;
+      right: 6px;
+      top: calc(50% - 4px); /* Center vertically */
+    }
+  }
+  

@@ -1,0 +1,76 @@
+body{
+    background-color: #ffffff;
+}
+.cardView {
+    border: 1px solid #ccc;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    margin-bottom: 20px;
+    background-color: #cbcbcb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    margin: auto;
+}
+
+
+.cardView-body {
+    padding: 20px;
+    background-color: #8f8f8fd1;
+    border-radius: 15px;
+}
+
+.card-body p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.card-body p strong {
+    font-weight: bold;
+}
+.topic{
+    font-size: 28px;
+}
+/* Optional: Add more styling as needed */
+.popup {
+    width: 20%;
+    height: 150px;
+    position: absolute;
+    top: 50%; /* Position it vertically at the center */
+    right: 10%; /* Position it to the right side */
+    transform: translateY(-50%); /* Center it vertically */
+    background-color: rgba(0, 0, 0, 0.638); /* Semi-transparent black background */
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup button {
+    background-color: rgb(236, 67, 0); /* Green */
+    border: none;
+    font-weight: bold;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 20px;
+    width: 50%;
+}
+.btnPay{
+    background-color: rgb(236, 67, 0);
+    width: 100%;
+    color: #ffffff;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 14px;
+}

@@ -1,0 +1,47 @@
+.main{
+    padding: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topbar{
+    background-color: rgb(255, 115, 0);
+    overflow: hidden;
+}
+
+.topbar a{
+    float: right;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 20px 26px;
+    text-decoration: none;
+    font-size: 26px;
+}
+
+.sidebar{
+    background-color: black;
+    color: rgb(255, 255, 255);
+    height: 100%;
+}
+
+.sidebar a{
+    margin-left: 10px;
+    display: block;
+    color: rgb(255, 255, 255);
+    padding-bottom: 10px;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.Content1{
+    background-color: rgb(255, 255, 255);
+}
+
+.title_prof{
+    color:black ;
+}

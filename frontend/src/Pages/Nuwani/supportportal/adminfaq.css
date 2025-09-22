@@ -1,0 +1,14 @@
+#popupsmart-feedback {
+    background-color: #343a40;
+    padding: 20px;
+    padding-top: 0%;
+    border-radius: 10px;
+    width: 100%; 
+    margin: 0 auto;
+  }
+
+  .form-container {
+    margin-top: 0%; 
+    display: flex;
+    justify-content: center;
+  }
