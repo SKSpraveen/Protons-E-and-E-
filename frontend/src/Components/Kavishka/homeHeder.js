@@ -49,7 +49,7 @@ function Header(){
                      </li>
 
                      <li className="nav-item" style={{marginLeft:"18%"}}>
-                     <button className="nav-btn" onClick={()=> navigate('/Cart_View')}>  <a className="nav-link_H" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></button>
+                     <button className="nav-btn" onClick={()=> navigate('/Cart_View')}>  <a className="nav-link_H" href="#">c<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></button>
                      </li>
 
                    </ul>

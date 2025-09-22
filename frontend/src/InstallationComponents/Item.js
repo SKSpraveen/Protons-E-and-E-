@@ -70,7 +70,7 @@ function Item() {
             <div className="cardView"> 
                 <div className="cardView-body">
                     <form onSubmit={sendData} className="row g-3">
-                        <img  src={itemDetails.photo} style={{width:"100%",height:"300px",marginTop:"4%"}}/>
+                        <img  src={itemDetails.photo} style={{width:"100%",height:"300px",marginTop:"4%"}} alt=""/>
                         <p style={{textAlign: "center",marginTop:"4%"}}><strong  className="topic"><input style={{width:"100%",height:"40px",border:"none",fontSize:"20px",textAlign: "center", background: "#8f8f8fd1",fontWeight:"700"}} value={itemDetails.item} onChange={(e) => { setProduct(e.target.value); }} /></strong></p>
                         <p style={{textAlign: "center",fontSize:"20px"}}>{itemDetails.description}</p>
                         <input 

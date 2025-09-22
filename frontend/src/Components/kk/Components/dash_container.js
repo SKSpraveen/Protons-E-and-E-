@@ -49,7 +49,7 @@ function DashContainer() { // Renamed to start with an uppercase letter
                         }} className="rflex-box">
                         <h1 style={{ fontSize: "30px", marginTop: "10px", marginBottom: "10px", color: "#0f0f0f", fontWeight: "bold" }}>Admin Main</h1>
                         <button className="button-42" onClick={handleEmployeeClick1}>GO</button>
-                        <h2 style={{ fontSize: "70px", marginTop: "10px", marginBottom: "10px", color: "#fff", fontWeight: "bold" }}></h2>
+                       
                     </div>
                     <div style={{ 
                             backgroundColor: "#f77834", 

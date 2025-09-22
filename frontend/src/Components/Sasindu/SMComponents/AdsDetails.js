@@ -100,7 +100,7 @@ function AdsDetails() {
                             <td>{advertisement.type}</td>
                             <td>{advertisement.item}</td>
                             <td>{advertisement.description}</td>
-                            <td><img src={advertisement.photo}></img></td>
+                            <td><img src={advertisement.photo} alt=""></img></td>
                             <td style={{textAlign:"center"}}>{advertisement.discount}</td>
                             <td style={{textAlign:"center"}}>{advertisement.price}</td>
                             <td style={{textAlign:"center"}}>{advertisement.price-(advertisement.price*advertisement.discount/100)}</td> {/* Assuming 'newprice' is stored as 'price' */}

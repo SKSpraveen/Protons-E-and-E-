@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Header from '../../Components/Rasindu/Header'; // Assuming correct path to Header component
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import Header from '../../Components/Rasindu/Header';
 import '../../Components/Rasindu/css/flex.css';
 import Axios from 'axios';
 import Chart from 'chart.js/auto';
@@ -8,15 +8,54 @@ function FinancialDashboard() {
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [profit, setProfit] = useState(0);
-  const [chartInstance, setChartInstance] = useState(null); // State to store chart instance
-  const [expenseByCategory, setExpenseByCategory] = useState({}); // State to store expenses by category
+  const chartInstance = useRef(null);
+  const [expenseByCategory, setExpenseByCategory] = useState({});
 
-  useEffect(() => {
-    fetchData();
+  // Memoize the function to calculate expenses by category
+  const calculateExpenseByCategory = useCallback((expenses) => {
+    const expensesByCategory = {};
+    expenses.forEach((expense) => {
+      const { category, amount } = expense;
+      if (category in expensesByCategory) {
+        expensesByCategory[category] += amount;
+      } else {
+        expensesByCategory[category] = amount;
+      }
+    });
+    setExpenseByCategory(expensesByCategory);
   }, []);
 
-  const fetchData = async () => {
+  // Memoize the function to create the pie chart
+  const createPieChart = useCallback((income, expenses) => {
+    const ctx = document.getElementById('pieChart');
+
+    // Destroy previous chart instance if it exists
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
+    }
+
+    const newChartInstance = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Total Income', 'Total Expenses'],
+        datasets: [{
+          label: 'Financial Data',
+          data: [income, expenses],
+          backgroundColor: [
+            '#28a307',
+            '#eb4034',
+          ],
+          hoverOffset: 4
+        }]
+      }
+    });
+    chartInstance.current = newChartInstance;
+  }, []);
+
+  // Memoize the data fetching function
+  const fetchData = useCallback(async () => {
     try {
+      // NOTE: Using localhost URLs. For a production app, these should be dynamic or configured.
       const bankIncomeResponse = await Axios.get('http://localhost:8070/api/bpayment');
       const creditIncomeResponse = await Axios.get('http://localhost:8070/api/cards');
       const directIncomeResponse = await Axios.get('http://localhost:8070/api/dpayment');
@@ -43,53 +82,12 @@ function FinancialDashboard() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [calculateExpenseByCategory, createPieChart]);
 
+  // Use a single useEffect hook to manage data fetching and chart creation
   useEffect(() => {
-    if (totalIncome !== 0) {
-      createPieChart(totalIncome, totalExpenses);
-    }
-  }, [totalIncome, totalExpenses]);
-
-  const calculateExpenseByCategory = (expenses) => {
-    const expenseByCategory = {};
-    expenses.forEach((expense) => {
-      const { category, amount } = expense;
-      if (category in expenseByCategory) {
-        expenseByCategory[category] += amount;
-      } else {
-        expenseByCategory[category] = amount;
-      }
-    });
-    setExpenseByCategory(expenseByCategory);
-  };
-
-  const createPieChart = (income, expenses) => {
-    const ctx = document.getElementById('pieChart');
-
-    // Destroy previous chart instance if it exists
-    if (chartInstance) {
-      chartInstance.destroy();
-    }
-
-    const newChartInstance = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: ['Total Income', 'Total Expenses'],
-        datasets: [{
-          label: 'Financial Data',
-          data: [income, expenses],
-          backgroundColor: [
-            '#28a307',
-            '#eb4034',
-          ],
-          hoverOffset: 4
-        }]
-      }
-    });
-
-    setChartInstance(newChartInstance); // Store new chart instance
-  };
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div className="body1">
@@ -109,14 +107,14 @@ function FinancialDashboard() {
 
           <div style={{ backgroundColor: "#2e2c2b", padding: "20px", borderRadius: "10px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", height: "auto" }} className="rflex-box">
              <h1 style={{ fontSize: "30px", marginTop: "20px", marginBottom: "10px", color: "#fa730c" }}>Financial Overview</h1>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <h2 style={{ fontSize: "24px", color: "#fff", fontWeight: "bold" }}>Total Expenses: Rs.{totalExpenses}</h2>
                 <table style={{ width: "100%", marginTop: "10px", borderCollapse: "collapse" }}>
                   <thead>
-                     <tr>
-                        <th style={{ fontSize: "24px", color: "#fa730c", textAlign: "left" }}>Category</th>
-                        <th style={{ fontSize: "24px", color: "#fa730c", textAlign: "right" }}>Amount</th>
-                      </tr>
+                    <tr>
+                      <th style={{ fontSize: "24px", color: "#fa730c", textAlign: "left" }}>Category</th>
+                      <th style={{ fontSize: "24px", color: "#fa730c", textAlign: "right" }}>Amount</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {Object.entries(expenseByCategory).map(([category, amount]) => (
@@ -127,15 +125,10 @@ function FinancialDashboard() {
                     ))}
                   </tbody>
                 </table>
-
-              </div>
-            </div>
-          
+             </div>
           </div>
+        </div>
       </div>
-      
-      
-      
       
       <div style={{ backgroundColor: "#2e2c2b", padding: "10px", borderRadius: "10px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",marginLeft:"25%",width:"50%",height:"150px" ,marginTop:"-1%"}} className="rflex-box">
         <h1 style={{ fontSize: "30px", marginTop: "20px", marginBottom: "10px", color: "#fa730c" }}>Profit:</h1>

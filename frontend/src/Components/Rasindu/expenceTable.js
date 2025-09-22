@@ -5,7 +5,7 @@ import Axios from "axios";
 
 const ExpenceTable = ({ rows }) => {
     const navigate = useNavigate();
-    const { state } = useLocation();
+    //const { state } = useLocation();
     
     const deleteExpense = async (id) => {
         try {
