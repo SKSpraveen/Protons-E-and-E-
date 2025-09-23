@@ -48,6 +48,8 @@ function CCTVAdvertisements() {
                         )}
                          <img className="card-img" src={ad.photo} alt="CCTV Advertisement" />
                         <h3 style={{marginTop:"20px"}}>{ad.item}</h3>
+                        <p> {ad.description } </p>
+
                         <br />
                         <p style={{fontSize:"20px",fontWeight:"700"}}>
                             {ad.discount > 0 && <s>{`Rs: ${ad.price}`}</s>}

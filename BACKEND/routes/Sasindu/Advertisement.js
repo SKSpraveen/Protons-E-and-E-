@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Advertisement = require("../../models/Sasindu/Advertisement");
+const sanitizeHtml = require("sanitize-html");
 
 
 // Add new advertisement
@@ -8,7 +9,11 @@ router.route("/add").post((req, res) => {
         // Sanitize all string inputs
         const type = sanitizeHtml(req.body.type);
         const item = sanitizeHtml(req.body.item);
-        const description = sanitizeHtml(req.body.description);
+        const description = sanitizeHtml(req.body.description, {
+            allowedTags: [],        // no tags allowed
+            allowedAttributes: {}   // no attributes allowed
+        });
+
         const photo = sanitizeHtml(req.body.photo);
         const availability = sanitizeHtml(req.body.availability);
 
@@ -52,7 +57,10 @@ router.route("/update/:id").put((req, res) => {
     try {
         const type = sanitizeHtml(req.body.type);
         const item = sanitizeHtml(req.body.item);
-        const description = sanitizeHtml(req.body.description);
+        const description = sanitizeHtml(req.body.description, {
+            allowedTags: [],        // no tags allowed
+            allowedAttributes: {}   // no attributes allowed
+        });
         const photo = sanitizeHtml(req.body.photo);
         const availability = sanitizeHtml(req.body.availability);
         const discount = Number(req.body.discount);
