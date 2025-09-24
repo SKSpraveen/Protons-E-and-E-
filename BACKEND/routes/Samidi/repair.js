@@ -1,31 +1,37 @@
 const router = require("express").Router();
 const repair = require("../../models/Samidi/repair");
+const csrf = require("csurf");
+const cookieParser = require("cookie-parser");
 
 
-router.route("/add").post((req,res)=> {
-    const name = req.body.name;
-    const email = req.body.email;
-    const phone = req.body.phone;
-    const repairType = req.body.repairType;
-    const description = req.body.description;
-    
+// Middleware
+router.use(cookieParser());
+const csrfProtection = csrf({ cookie: true });
 
-    const newRepair = new repair ({
+// Route to get CSRF token (frontend can fetch this)
+router.get("/csrf-token", csrfProtection, (req, res) => {
+    res.json({ csrfToken: req.csrfToken() });
+});
+
+// Add repair (protected)
+router.route("/add").post(csrfProtection, (req, res) => {
+    const { name, email, phone, repairType, description } = req.body;
+
+    const newRepair = new repair({
         name,
         email,
         phone,
         repairType,
         description,
-        
     });
 
-    newRepair.save().then(()=>{
-        res.json("Repair Added..")
-    }).catch((err)=>{
-        console.log(err);
-    })
-
-})
+    newRepair.save()
+        .then(() => res.json("Repair Added.."))
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: "Error adding repair" });
+        });
+});
 
 router.route("/").get((req,res)=> {
     repair.find().then((repair)=>{
