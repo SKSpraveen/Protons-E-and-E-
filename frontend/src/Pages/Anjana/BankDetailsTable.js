@@ -4,6 +4,11 @@ import jsPDF from 'jspdf';
 import Barcode from 'react-barcode';
 import ReactDOM from 'react-dom';
 import emailjs from 'emailjs-com';
+// Instead of Node crypto
+import crypto from 'crypto-browserify';
+
+
+
 
 const BankDetailsTable = ({ rows, handleDelete, handleUpdate, showActions = true, showContinueButton = false }) => {
     const [editData, setEditData] = useState(null);
@@ -34,8 +39,16 @@ const BankDetailsTable = ({ rows, handleDelete, handleUpdate, showActions = true
         doc.text(`Account Number: ${receiptData.accountnumber}`, 20, 75);
         doc.text(`Amount: ${receiptData.amount}`, 20, 90);
         doc.text(`Slip: ${receiptData.slip}`, 20, 105);
+
+
+
         doc.text("Payment Stage: Pending", 20, 120);
-        const paymentId = Math.random().toString(36).substring(7);
+        const paymentId = crypto.randomBytes(16).toString('hex'); // safe unique ID
+
+
+
+
+
         doc.text(`Payment ID: ${paymentId}`, 20, 135);
         const barcodeImage = generateBarcodeImage(paymentId);
         doc.addImage(barcodeImage, 'PNG', 20, 150, 100, 40);
