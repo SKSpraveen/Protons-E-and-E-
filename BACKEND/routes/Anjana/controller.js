@@ -35,28 +35,39 @@ const addcards = (req, res) => {
         });
 };
 
-const updatecards = (req, res) => {
-    const { card: cardNumber, cname, exdate, cvv, email,amount } = req.body;
-    Card.updateOne({ card: cardNumber }, { $set: { card: cardNumber, cname, exdate, cvv, email,amount } })
-        .then(response => {
-            res.json(response);
-        })
-        .catch(error => {
-            res.json({ message: error });
-        });
+// Update card
+const updatecards = async (req, res) => {
+    try {
+        const { card: cardNumber, cname, exdate, cvv, email, amount } = req.body;
+
+        if (!cardNumber || typeof cardNumber !== "string" || cardNumber.includes("$"))
+            return res.status(400).json({ message: "Invalid card number" });
+
+        const result = await Card.updateOne(
+            { card: cardNumber },
+            { $set: { card: cardNumber, cname, exdate, cvv, email, amount } }
+        );
+
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
-const deletecards = (req, res) => {
-    const { card: cardNumber } = req.body;
-    Card.deleteOne({ card: cardNumber })
-        .then(response => {
-            res.json({ message: "Card deleted successfully", response });
-        })
-        .catch(error => {
-            res.status(500).json({ message: "Error deleting card", error });
-        });
-};
+// Delete card
+const deletecards = async (req, res) => {
+    try {
+        const { card: cardNumber } = req.body;
 
+        if (!cardNumber || typeof cardNumber !== "string" || cardNumber.includes("$"))
+            return res.status(400).json({ message: "Invalid card number" });
+
+        const result = await Card.deleteOne({ card: cardNumber });
+        res.json({ message: "Card deleted successfully", result });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
 
