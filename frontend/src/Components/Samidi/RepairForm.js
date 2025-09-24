@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../Style/Repair.css";
 import axios from "axios";
+import validator from "validator";
 
 function RepairForm() {
     const [name, setName] = useState("");
@@ -38,14 +39,12 @@ function RepairForm() {
         if (!email) {
             setEmailError("Email is Required.");
             return;
+        } else if (!validator.isEmail(email)) {
+            // Using validator instead of regex
+            setEmailError("Please enter a valid email address.");
+            return;
         } else {
             setEmailError("");
-        }
-
-        const EmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!EmailPattern.test(email)) {
-            setEmailError("Enter valid Email.");
-            return;
         }
     
 
