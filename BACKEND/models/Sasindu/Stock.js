@@ -1,39 +1,45 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const StockSchema =new Schema({
-    productCode:{
+const StockSchema = new Schema({
+    productCode: {
         type: String,
-        required:true
+        required: true,
+        trim: true
     },
-    productCategory:{
+    productCategory: {
         type: String,
-        required:true
+        required: true,
+        trim: true
     },
-    product:{
+    product: {
         type: String,
-        required:true
+        required: true,
+        trim: true
     },
-    description:{
-        type:String,
+    description: {
+        type: String,
+        trim: true
     },
-    supplyCompany:{
-        type:String,
+    supplyCompany: {
+        type: String,
+        trim: true
     },
-    dateReceived:{
-        type:String,
-        required:true
+    dateReceived: {
+        type: Date,   // FIX: enforce Date type instead of String
+        required: true
     },
-    quantity:{
-        type:Number,
-        required:true
+    quantity: {
+        type: Number,
+        required: true,
+        min: 0        // FIX: ensure no negative quantity
     },
-    unitPrice:{
-        type:Number,
-        required:true
+    unitPrice: {
+        type: Number,
+        required: true,
+        min: 0        // FIX: prevent negative prices
     }
+});
 
-})
-const Stock = mongoose.model("Stock",StockSchema);
-
-module.exports =Stock;
+const Stock = mongoose.model("Stock", StockSchema);
+module.exports = Stock;
