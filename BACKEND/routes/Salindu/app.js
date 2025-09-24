@@ -4,6 +4,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
+
+
+// Security: remove Express version disclosure
+app.disable('x-powered-by');
+
+
+
 app.use(cors());
 app.use(bodyParser.json());
 

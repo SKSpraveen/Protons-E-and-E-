@@ -7,7 +7,14 @@ const Emp_salary = require('./finalCall/emp_salary')
 const Employee_attendance_data = require('./finalCall/emp_attendance')
 const Empolyee_intern_final_att = require('./finalCall/emp_final_intern_att')
 
+
+
 app.use(cors());
+
+
+
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
