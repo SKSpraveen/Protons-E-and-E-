@@ -2,32 +2,39 @@ const router = require("express").Router();
 const Advertisement = require("../../models/Sasindu/Advertisement");
 
 
-router.route("/add").post((req,res)=> {
-    const type = req.body.type;
-    const item = req.body.item;
-    const description = req.body.description;
-    const photo = req.body.photo;
-    const discount = Number(req.body.discount);
-    const price = Number(req.body.price);
-    const availability = req.body.availability;
+// Add new advertisement
+router.route("/add").post((req, res) => {
+    try {
+        // Sanitize all string inputs
+        const type = sanitizeHtml(req.body.type);
+        const item = sanitizeHtml(req.body.item);
+        const description = sanitizeHtml(req.body.description);
+        const photo = sanitizeHtml(req.body.photo);
+        const availability = sanitizeHtml(req.body.availability);
 
-    const newAdvertisement = new Advertisement ({
-        type,
-        item,
-        description,
-        photo,
-        discount,
-        price,
-        availability,
-    });
+        // Ensure numeric fields are numbers
+        const discount = Number(req.body.discount);
+        const price = Number(req.body.price);
 
-    newAdvertisement.save().then(()=>{
-        res.json("Advertisment Added..")
-    }).catch((err)=>{
-        console.log(err);
-    })
+        // Create new advertisement
+        const newAdvertisement = new Advertisement({
+            type,
+            item,
+            description,
+            photo,
+            discount,
+            price,
+            availability,
+        });
 
-})
+        // Save to database
+        newAdvertisement.save()
+            .then(() => res.json("Advertisement Added Successfully"))
+            .catch((err) => res.status(500).json({ error: err.message }));
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 router.route("/").get((req, res) => {
     Advertisement.find()
@@ -40,25 +47,29 @@ router.route("/").get((req, res) => {
         });
 });
 
-router.route("/update/:id").put(async(req,res)=> {
-    let adId = req.params.id;
-    const {type,item,description,photo,discount,oldPrice,price,availability} = req.body;
-    const updateAd = {
-        type,
-        item,
-        description,
-        photo,
-        discount,
-        price,
-        availability,
+// Optional: Update advertisement with sanitization
+router.route("/update/:id").put((req, res) => {
+    try {
+        const type = sanitizeHtml(req.body.type);
+        const item = sanitizeHtml(req.body.item);
+        const description = sanitizeHtml(req.body.description);
+        const photo = sanitizeHtml(req.body.photo);
+        const availability = sanitizeHtml(req.body.availability);
+        const discount = Number(req.body.discount);
+        const price = Number(req.body.price);
+
+        Advertisement.findByIdAndUpdate(
+            req.params.id,
+            { type, item, description, photo, discount, price, availability },
+            { new: true }
+        )
+            .then((updatedAd) => res.json(updatedAd))
+            .catch((err) => res.status(500).json({ error: err.message }));
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-    const update = await Advertisement.findByIdAndUpdate(adId,updateAd).then(()=> {
-        res.status(200).send({status:"advertisement updated.."})
-    }).catch((err)=> {
-        console.log(err);
-        res.status(500).send({status:"Error with updating data..."});
-    })
-})
+});
+
 
 router.route("/delete/:id").delete(async (req, res) => {
     try {
