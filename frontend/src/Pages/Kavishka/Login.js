@@ -4,6 +4,8 @@ import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
 import { useLogin } from "../../hooks/useLogin";
 import image from '../../Images/Kavishka/cctv2.jpg'
+import OAuth from "../../Components/Kavishka/OAuth";
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -67,6 +69,7 @@ const Login = () => {
               >
                 Login
               </button>
+              <OAuth/>
               <p style={{ textAlign: "center" }}>
                 Don't have an account?
                 <a href="" onClick={() => navigate("/signup")} className="" style={{ color: "blue" }}>

@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from "react-redux";
+import { store } from "./redux/store";   
+
 import Installation from './Installation/Installation_View';
 import CCTV from './Pages/Sasindu/CCTV';
 import DOOR_PHONE from './Pages/Sasindu/DOOR_PHONE';
@@ -105,6 +108,7 @@ import Transportation from './Components/Salindu/Transportation.js';
 
 ReactDOM.render(
 
+   <Provider store={store}>
   <BrowserRouter>
     <AuthContextProvider>
       <Routes>
@@ -210,7 +214,9 @@ ReactDOM.render(
 
       </Routes>
       </AuthContextProvider>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </Provider>,
+
   document.getElementById('root')
 );
 

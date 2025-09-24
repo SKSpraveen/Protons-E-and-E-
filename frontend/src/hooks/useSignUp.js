@@ -23,6 +23,7 @@ export const useSignUp = () => {
 
     if (!response.ok) {
       setIsLoading(false);
+      console.error("Signup failed:", json);
       setError(json.error);
     }
     if (response.ok) {
