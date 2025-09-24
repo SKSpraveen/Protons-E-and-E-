@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const helmet = require('helmet')   // Added Helmet
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
@@ -8,16 +9,43 @@ const router=require('../BACKEND/routes/Anjana/router.js')
 const router2=require('../BACKEND/routes/KK/router.js')
 const routerN=require('../BACKEND/routes/Nuwani/router.js')
 const mainRouter=require('../BACKEND/routes/Salindu/router.js')
+const userRoute = require('../BACKEND/routes/Kavishka/userRoute.js');
+
 
 require('dotenv').config();
 const dotenv = require("dotenv");
 
 const PORT = process.env.PORT || 8070
 
-app.use(cors())
+// CORS: allow frontend + credentials
+
+const corsOptions = {
+  origin: ['http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+const rateLimit = require('express-rate-limit');
+
+// Rate limiting: limit requests per IP
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per window
+  message: "Too many requests from this IP, please try again later."
+});
+app.use(limiter);
+
 app.use(bodyParser.json())
 
-const uri ='mongodb+srv://mynamesasindu:sasindu123@protonsdb.zcrftue.mongodb.net/protonsDB?retryWrites=true&w=majority';
+app.use(express.json());
+
+// Use Helmet for security headers
+app.use(helmet());
+
+
+// secure connection string from .env
+const uri = process.env.MONGO_URI;
 
 const connect = async () =>{
     try{
@@ -54,7 +82,6 @@ app.use("/Cart",cartRouter);
 const ExpencesRouter = require("./routes/Rasindu/Expence.js");
 app.use("/Expence",ExpencesRouter);
 
-const userRoute =require('./routes/Kavishka/userRoute')
 app.use('/api/auth',userRoute);
 
 const user =require('./routes/Kavishka/user')
@@ -68,3 +95,7 @@ app.use("/api/auth", staffRoute);
 
 //Nuwani
 app.use('/api', routerN);
+
+
+// Routes
+app.use('/api/auth', userRoute);
